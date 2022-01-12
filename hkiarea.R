@@ -45,8 +45,8 @@ point_helsinki_area <- point %>%
   filter(municipality_code %in% polygon_helsinki_area$municipality_code)
 
 ggplot(data = lakes_big_enough) +
-  geom_sf(data = polygon_helsinki_area, alpha = .3) + 
   geom_sf(fill = "#3498db") +
+  geom_sf(data = polygon_helsinki_area, alpha = .3) + 
   geom_sf_text(data = point_helsinki_area, aes(label = teksti), size = 2) +
   geom_label_repel(data = names_closest, 
                    aes(x = lon, y = lat, label = vesisto_nimi_s),
