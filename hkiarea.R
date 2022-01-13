@@ -20,9 +20,8 @@ get_names <- function(df) {
     )
 }
 
-# Closests lake(s) to home
-home <- data.frame(latitude = 60.188081, longitude = 24.998965)
-home_sf <- st_as_sf(home, coords = c("longitude", "latitude"), crs = 4326)
+here <- data.frame(latitude = 60.186497, longitude = 25.006670)
+here_sf <- st_as_sf(here, coords = c("longitude", "latitude"), crs = 4326)
 
 lakes_big_enough_dist <- lakes_big_enough %>% 
   rowwise() %>% 
@@ -47,7 +46,7 @@ point_helsinki_area <- point %>%
 ggplot(data = lakes_big_enough) +
   geom_sf(fill = "#3498db") +
   geom_sf(data = polygon_helsinki_area, alpha = .3) + 
-  geom_sf_text(data = point_helsinki_area, aes(label = teksti), size = 2) +
+  geom_sf_text(data = point_helsinki_area, aes(label = stringr::str_to_title(teksti)), size = 2) +
   geom_label_repel(data = names_closest, 
                    aes(x = lon, y = lat, label = vesisto_nimi_s),
                    box.padding = unit(0.8, "lines"),
@@ -71,7 +70,7 @@ ggplot(data = lakes_big_enough) +
         panel.grid.minor = element_blank(),
         panel.grid.major = element_line(colour = "transparent")) +
     labs(x = NULL, y = NULL, 
-         title = "Closests lakes from home big enough for cross-country skiing (100x100 m)",
+         title = "Closests lakes big enough for cross-country skiing (100x100 m)",
          caption = "Data: Helsinki region map https://hri.fi/data/dataset/seutukartta ; Statistics Finland via geofi | @ttso")
 
 
