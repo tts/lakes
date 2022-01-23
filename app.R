@@ -54,7 +54,7 @@ ui <- fluidPage(
           </p>
           <p>
           </p>
-          <p><a href='https://github.com/tts/lakes'>R code</a></p>
+          <p><a href='https://github.com/tts/lakes/app.R'>R code</a></p>
           </span>"),
     width = 3
   ),
