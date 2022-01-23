@@ -54,7 +54,9 @@ ui <- fluidPage(
           </p>
           <p>
           </p>
-          <p><a href='https://github.com/tts/lakes/app.R'>R code</a></p>
+          <p><a href='https://github.com/tts/lakes'>R code</a></p>
+          <p></p>
+          <p>Data by <a href='https://hri.fi/data/en_GB/dataset/seutukartta'>Helsinki Region Map</a></p>
           </span>"),
     width = 3
   ),
