@@ -1,6 +1,11 @@
 library(sf)
 library(tidyverse)
 
+# Source: Helsinki region map. The maintainer of the dataset is Helsingin kaupunkiympäristön toimiala / 
+# Kaupunkimittauspalvelut and the original author is Helsingin kaupunkiympäristön toimiala / Kaupunkimittauspalvelut 
+# yhdessä HSY:n ja alueen muiden kuntien mittausorganisaatioiden kanssa. The dataset has been downloaded from 
+# Helsinki Region Infoshare service on 23.01.2022 under the license Creative Commons Attribution 4.0.
+
 baseurl <- "https://kartta.hel.fi/ws/geoserver/avoindata/wfs?request=GetFeature&service=WFS&version=2.0.0"
 type <- "avoindata:Seutukartta_maankaytto_jarvet"
 wfs_request <- paste0(baseurl, "&typeName=", type, "&outputFormat=json")
