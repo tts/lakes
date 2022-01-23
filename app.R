@@ -7,10 +7,6 @@ library(lwgeom)
 my_files <- list.files(pattern = "\\.RDS$")
 lakes <- list()
 lakes <- lapply(my_files, readRDS)
-# lakes1 <- readRDS("lakes1.RDS")
-# lakes2 <- readRDS("lakes2.RDS")
-# lakes3 <- readRDS("lakes3.RDS")
-# lakes4 <- readRDS("lakes4.RDS")
 
 sizes <- c("-10.000", "10.000-100.000", "100.000-1.000.000", "1.000.000-")
 
