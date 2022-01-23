@@ -2,10 +2,15 @@ library(shiny)
 library(tidyverse)
 library(leaflet)
 library(sf)
+library(lwgeom)
 
 my_files <- list.files(pattern = "\\.RDS$")
 lakes <- list()
 lakes <- lapply(my_files, readRDS)
+# lakes1 <- readRDS("lakes1.RDS")
+# lakes2 <- readRDS("lakes2.RDS")
+# lakes3 <- readRDS("lakes3.RDS")
+# lakes4 <- readRDS("lakes4.RDS")
 
 sizes <- c("-10.000", "10.000-100.000", "100.000-1.000.000", "1.000.000-")
 
@@ -51,6 +56,9 @@ ui <- fluidPage(
               10.000-100.000 <= 300x300<br/>
               100.000-1.000.000 <= 1000x1000
           </p>
+          <p>
+          </p>
+          <p><a href='https://github.com/tts/lakes'>R code</a></p>
           </span>"),
     width = 3
   ),
@@ -58,7 +66,7 @@ ui <- fluidPage(
   mainPanel(
     tabsetPanel(
       tabPanel("Map", 
-               leafletOutput("map", height = 500, width = "100%"))
+               leafletOutput("map", height = 800, width = "100%"))
     ),
     width = 9
   )
@@ -72,10 +80,10 @@ server <- function(input, output, session) {
       lakes_from_here <- lakes[[1]] 
     }
     if (input$size == "10.000-100.000") {
-      lakes_from_here <- lakes[[2]] 
+      lakes_from_here <- lakes[[2]]
     }
     if (input$size == "100.000-1.000.000") {
-      lakes_from_here <- lakes[[3]] 
+      lakes_from_here <- lakes[[3]]
     }
     if (input$size == "1.000.000-") {
       lakes_from_here <- lakes[[4]]
