@@ -25,8 +25,8 @@ here_sf <- st_as_sf(here, coords = c("longitude", "latitude"), crs = 4326)
 
 lakes_big_enough_dist <- lakes_big_enough %>% 
   rowwise() %>% 
-  mutate(d_from_home = st_distance(home_sf, geometry)) %>% 
-  arrange(d_from_home)
+  mutate(d_from_here = st_distance(here_sf, geometry)) %>% 
+  arrange(d_from_here)
 
 names_closest <- get_names(lakes_big_enough_dist[1:5,])
 
