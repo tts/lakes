@@ -7,13 +7,12 @@ library(lwgeom)
 my_files <- list.files(pattern = "\\.RDS$")
 lakes <- list()
 lakes <- lapply(my_files, readRDS)
-
 sizes <- c("-10.000", "10.000-100.000", "100.000-1.000.000", "1.000.000-")
 
 ui <- fluidPage(
   
   tags$h2(
-    HTML("In the Helsinki area, find your closest lake(s) for cross-country skiing, skating etc.")
+    HTML("Closest lake(s) in the Helsinki area for cross-country skiing and other winter sports")
   ),
   
   tags$head(
@@ -44,13 +43,13 @@ ui <- fluidPage(
     HTML("<p></p>
           <span style='color:black;font-size:12px'
           <p>
-            Choose the lake size category, the number of lakes to show - and click the map.
+            Choose the lake size category, the number of lakes to show - and click/tap the map.
           </p>
           <p></p>
           <p>
               -10.000 m2 <= 100x100 m<br/>
-              10.000-100.000 <= 300x300<br/>
-              100.000-1.000.000 <= 1000x1000
+              10.000-100.000 <~ 300x300 m<br/>
+              100.000-1.000.000 <~ 1x1 km
           </p>
           <p>
           </p>
@@ -113,14 +112,38 @@ server <- function(input, output, session) {
     
     lake_category <- input$size
     
+    # Closests ones
     lakes_from_here <- size_chosen() %>%
       rowwise() %>%
       mutate(d_from_here = st_distance(here_sf, geometry)) %>%
       arrange(d_from_here)
     
+    # Coordinates for labels
+    centers <- lakes_from_here[1:input$nr, ] %>% 
+      st_centroid() %>% 
+      data.frame() %>% 
+      st_as_sf() %>% 
+      mutate(lon = st_coordinates(.)[,1],
+             lat = st_coordinates(.)[,2]) 
+    
     map_proxy = leafletProxy("map") %>%
       clearShapes() %>%
-      addPolygons(data = lakes_from_here[1:input$nr, ]) %>% 
+      clearMarkers() %>% 
+      addCircleMarkers(lat = click$lat, lng = click$lng, 
+                       color = "orange", stroke = FALSE, weight = 3) %>%
+      addPolygons(data = lakes_from_here[1:input$nr, ], stroke = FALSE) %>% 
+      addLabelOnlyMarkers(data = centers,
+                          lng = ~lon, lat = ~lat, 
+                          label = ~ifelse(!is.na(vesisto_nimi_s), vesisto_nimi_s, vesisto_nimi_r),
+                          labelOptions = labelOptions(noHide = TRUE, 
+                                                      textOnly = TRUE,
+                                                      offset = c(0,0),
+                                                      style = list(
+                                                        "color" = "blue", 
+                                                        "font-family" = "serif",
+                                                        "font-style" = "normal",
+                                                        "font-size" = "12px",
+                                                        "padding" = "10px"))) %>% 
       setView(lng = 24.869128, lat = 60.277815, zoom = 9)
     
   })
