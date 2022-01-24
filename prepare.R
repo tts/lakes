@@ -38,10 +38,10 @@ write_rds(lakes4, "lakes4.RDS")
 
 type <- "Seutukartta_aluejako_kuntarajat"
 wfs_request <- paste0(baseurl, "&typeName=", type, "&outputFormat=json")
-res_c <- st_read(wfs_request, quiet = TRUE, stringsAsFactors = FALSE)
-res_c_4326 <- st_transform(res_c, crs = 4326)
+res_area <- st_read(wfs_request, quiet = TRUE, stringsAsFactors = FALSE)
+res_area_4326 <- st_transform(res_area, crs = 4326)
 
-area <- res_c_4326 %>%
+area <- res_area_4326 %>%
   st_combine() %>% 
   st_cast(., 'MULTILINESTRING')
 
