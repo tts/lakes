@@ -4,10 +4,13 @@ library(leaflet)
 library(sf)
 library(lwgeom)
 
-my_files <- list.files(pattern = "\\.RDS$")
+# Lakes
+my_files <- list.files(pattern = "lakes[0-9]\\.RDS$")
 lakes <- list()
 lakes <- lapply(my_files, readRDS)
 sizes <- c("-10.000", "10.000-100.000", "100.000-1.000.000", "1.000.000-")
+# Municipality borders
+area <- readRDS("area.RDS")
 
 ui <- fluidPage(
   
@@ -95,6 +98,7 @@ server <- function(input, output, session) {
     leaflet() %>%
       addProviderTiles("CartoDB.Positron",
                        options = providerTileOptions(minZoom = 9, maxZoom = 15)) %>% 
+      addPolylines(data = area, color = "#919c94", weight = 2) %>% 
       # Martinlaakso
       setView(lng = 24.869128, lat = 60.277815, zoom = 9)
   })
@@ -129,6 +133,7 @@ server <- function(input, output, session) {
     map_proxy = leafletProxy("map") %>%
       clearShapes() %>%
       clearMarkers() %>% 
+      addPolylines(data = area, color = "#919c94", weight = 2) %>% 
       addCircleMarkers(lat = click$lat, lng = click$lng, 
                        color = "orange", stroke = FALSE, weight = 3) %>%
       addPolygons(data = lakes_from_here[1:input$nr, ], stroke = FALSE) %>% 
@@ -139,7 +144,7 @@ server <- function(input, output, session) {
                                                       textOnly = TRUE,
                                                       offset = c(0,0),
                                                       style = list(
-                                                        "color" = "blue", 
+                                                        "color" = "black", 
                                                         "font-family" = "serif",
                                                         "font-style" = "normal",
                                                         "font-size" = "12px",
