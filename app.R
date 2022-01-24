@@ -43,7 +43,7 @@ ui <- fluidPage(
     HTML("<p></p>
           <span style='color:black;font-size:12px'
           <p>
-            Choose the lake size category, the number of lakes to show - and click/tap the map.
+            Choose the category of the size, the number of lakes to show - and click/tap the map.
           </p>
           <p></p>
           <p>
@@ -95,7 +95,7 @@ server <- function(input, output, session) {
     leaflet() %>%
       addProviderTiles("CartoDB.Positron",
                        options = providerTileOptions(minZoom = 9, maxZoom = 15)) %>% 
-      # Center for Martinlaakso
+      # Martinlaakso
       setView(lng = 24.869128, lat = 60.277815, zoom = 9)
   })
   
