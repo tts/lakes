@@ -1,7 +1,7 @@
 library(sf)
 library(tidyverse)
 
-# Lakes, and municipality boundaries
+# Lakes in the bigger Helsinki area
 #
 # Source: Helsinki region map. The maintainer of the dataset is Helsingin kaupunkiympäristön toimiala / 
 # Kaupunkimittauspalvelut and the original author is Helsingin kaupunkiympäristön toimiala / Kaupunkimittauspalvelut 
@@ -36,14 +36,4 @@ write_rds(lakes2, "lakes2.RDS")
 write_rds(lakes3, "lakes3.RDS")
 write_rds(lakes4, "lakes4.RDS")
 
-# baseurl <- "https://kartta.hel.fi/ws/geoserver/avoindata/wfs?request=GetFeature&service=WFS&version=2.0.0"
-# type <- "Seutukartta_aluejako_kuntarajat"
-# wfs_request <- paste0(baseurl, "&typeName=", type, "&outputFormat=json")
-# res_c <- st_read(wfs_request, quiet = TRUE, stringsAsFactors = FALSE)
-# res_c_4326 <- st_transform(res_c, crs = 4326)
-# 
-# # Get outer borders
-# area.outer <- cartography::getOuterBorders(x = res_c_4326, res = 1000, width = 2500)
-# house <- res_c_4326 %>% 
-#   st_make_valid() %>% 
-#   st_union()
+
