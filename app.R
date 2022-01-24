@@ -46,7 +46,7 @@ ui <- fluidPage(
     HTML("<p></p>
           <span style='color:black;font-size:12px'
           <p>
-            Choose the category of the size, the number of lakes to show - and click/tap the map.
+            Pick your location by clicking/tapping the map. Select the category of the lake size, and the number of lakes to show.
           </p>
           <p></p>
           <p>
