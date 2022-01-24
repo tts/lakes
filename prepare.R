@@ -1,7 +1,7 @@
 library(sf)
 library(tidyverse)
 
-# Lakes in the bigger Helsinki area
+# Lakes in the bigger Helsinki area, and municipality borders
 #
 # Source: Helsinki region map. The maintainer of the dataset is Helsingin kaupunkiympäristön toimiala / 
 # Kaupunkimittauspalvelut and the original author is Helsingin kaupunkiympäristön toimiala / Kaupunkimittauspalvelut 
@@ -36,4 +36,13 @@ write_rds(lakes2, "lakes2.RDS")
 write_rds(lakes3, "lakes3.RDS")
 write_rds(lakes4, "lakes4.RDS")
 
+type <- "Seutukartta_aluejako_kuntarajat"
+wfs_request <- paste0(baseurl, "&typeName=", type, "&outputFormat=json")
+res_c <- st_read(wfs_request, quiet = TRUE, stringsAsFactors = FALSE)
+res_c_4326 <- st_transform(res_c, crs = 4326)
 
+area <- res_c_4326 %>%
+  st_combine() %>% 
+  st_cast(., 'MULTILINESTRING')
+
+write_rds(area, "area.RDS")
