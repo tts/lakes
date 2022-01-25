@@ -56,9 +56,9 @@ ui <- fluidPage(
           </p>
           <p>
           </p>
-          <p><a href='https://github.com/tts/lakes'>R code</a></p>
+          <p><a href='https://github.com/tts/lakes'>R code</a> by <a href='https://twitter.com/ttso'>@ttso</a>.</p>
           <p></p>
-          <p>Data by <a href='https://hri.fi/data/en_GB/dataset/seutukartta'>Helsinki Region Map</a></p>
+          <p>Data: <a href='https://hri.fi/data/en_GB/dataset/seutukartta'>Helsinki Region Map</a>.</p>
           </span>"),
     width = 3
   ),
@@ -113,8 +113,6 @@ server <- function(input, output, session) {
     
     here <- data.frame(latitude = click$lat, longitude = click$lng)
     here_sf <- st_as_sf(here, coords = c("longitude", "latitude"), crs = 4326)
-    
-    lake_category <- input$size
     
     # Closests ones
     lakes_from_here <- size_chosen() %>%
