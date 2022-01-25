@@ -2,7 +2,7 @@ library(shiny)
 library(tidyverse)
 library(leaflet)
 library(sf)
-library(lwgeom)
+library(lwgeom) # shinyapps.io asks for this
 
 # Lakes
 my_files <- list.files(pattern = "lakes[0-9]\\.RDS$")
